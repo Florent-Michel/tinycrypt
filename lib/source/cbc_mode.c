@@ -102,8 +102,8 @@ int tc_cbc_mode_decrypt(uint8_t *out, unsigned int outlen, const uint8_t *in,
 	 */
 	p = iv;
 	m = 0;
-	for (n = 16; n < outlen; ++n) {
-		if ((n % TC_AES_BLOCK_SIZE) == 0) {
+	for (n = m = 0; n < outlen; ++n) {
+		if (n >= TC_AES_BLOCK_SIZE && (n % TC_AES_BLOCK_SIZE) == 0) {
 			(void)tc_aes_decrypt(buffer, in, sched);
 			in += TC_AES_BLOCK_SIZE;
 			m = 0;
