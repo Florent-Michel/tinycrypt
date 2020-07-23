@@ -86,7 +86,7 @@ static inline void inv_mix_columns(uint8_t *s)
 	mult_row_column(&t[Nb], s+Nb);
 	mult_row_column(&t[2*Nb], s+(2*Nb));
 	mult_row_column(&t[3*Nb], s+(3*Nb));
-	(void)_copy(s, sizeof(s), t, sizeof(t));
+	(void)_copy(s, sizeof(t), t, sizeof(t));
 }
 
 static inline void add_round_key(uint8_t *s, const unsigned int *k)
@@ -123,7 +123,7 @@ static inline void inv_shift_rows(uint8_t *s)
 	t[4]  = s[4]; t[5] = s[1]; t[6] = s[14]; t[7] = s[11];
 	t[8]  = s[8]; t[9] = s[5]; t[10] = s[2]; t[11] = s[15];
 	t[12] = s[12]; t[13] = s[9]; t[14] = s[6]; t[15] = s[3];
-	(void)_copy(s, sizeof(s), t, sizeof(t));
+	(void)_copy(s, sizeof(t), t, sizeof(t));
 }
 
 int tc_aes_decrypt(uint8_t *out, const uint8_t *in, const TCAesKeySched_t s)
@@ -139,7 +139,7 @@ int tc_aes_decrypt(uint8_t *out, const uint8_t *in, const TCAesKeySched_t s)
 		return TC_CRYPTO_FAIL;
 	}
 
-	(void)_copy(state, sizeof(state), in, sizeof(in));
+	(void)_copy(state, sizeof(state), in, sizeof(state));
 
 	add_round_key(state, s->words + Nb*Nr);
 
@@ -154,7 +154,7 @@ int tc_aes_decrypt(uint8_t *out, const uint8_t *in, const TCAesKeySched_t s)
 	inv_sub_bytes(state);
 	add_round_key(state, s->words);
 
-	(void)_copy(out, sizeof(out), state, sizeof(state));
+	(void)_copy(out, sizeof(state), state, sizeof(state));
 
 	/*zeroing out the state buffer */
 	_set(state, TC_ZERO_BYTE, sizeof(state));
