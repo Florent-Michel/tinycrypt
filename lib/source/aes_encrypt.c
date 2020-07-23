@@ -65,7 +65,7 @@ static inline unsigned int rotword(unsigned int a)
 }
 
 #define subbyte(a, o)(sbox[((a) >> (o))&0xff] << (o))
-#define subword(a)(subbyte(a, 24)|subbyte(a, 16)|subbyte(a, 8)|subbyte(a, 0))
+#define subword(a)((unsigned int)subbyte(a, 24)|subbyte(a, 16)|subbyte(a, 8)|subbyte(a, 0))
 
 int tc_aes128_set_encrypt_key(TCAesKeySched_t s, const uint8_t *k)
 {
